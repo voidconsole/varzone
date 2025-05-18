@@ -1,0 +1,72 @@
+.home {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.subtitle {
+  color: #fff;
+  font-size: 2rem;
+  margin: 1rem;
+  margin-bottom: 0 !important;
+}
+
+.title {
+  font-weight: 800;
+  color: #ffffff;
+  font-size: 12rem;
+  margin: 0;
+  filter: drop-shadow(-20px -10px 10px #dd02392c)
+    drop-shadow(10px 10px 20px #006be633);
+  transition: all 1s ease-in-out;
+}
+
+.title:hover {
+  filter: drop-shadow(-20px -10px 10px #006be633)
+    drop-shadow(10px 10px 20px #dd02392c);
+}
+
+.description {
+  color: #ffffffc0;
+  font-size: 1.5rem;
+  margin: 1rem;
+}
+
+.actions {
+  margin-top: 5rem;
+}
+
+.button {
+  width: 20rem;
+  border: #ffffff 1px solid;
+  border-radius: 1000px;
+  background-color: #1616162d;
+  margin: 1rem;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #ffffff;
+  color: #161616;
+}
+
+.button:hover p,
+.button:hover h4 {
+  color: #161616;
+}
+
+.button p {
+  font-size: 1rem;
+  margin: 0.7rem;
+  color: #ffffffc0;
+}
+
+.button h4 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin: 0.7rem;
+}

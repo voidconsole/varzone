@@ -1,0 +1,58 @@
+.loginCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2em;
+  margin: 2em auto;
+  max-width: 400px;
+  border: #646464 solid 0.3px;
+  border-radius: 20px;
+  background-color: #1a1a1a67;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.title {
+  font-weight: 800;
+  color: #ffffff;
+  font-size: 3rem;
+  margin: 2rem auto;
+}
+
+.input {
+  background-color: transparent;
+  display: block;
+  width: 80%;
+  height: 3em;
+  border-radius: 8px;
+  padding: 0.5em 1em;
+  margin: 1em auto;
+  border: 1px solid #ccc;
+  color: white;
+}
+
+.button {
+	  width: 87.5%;
+  margin: 1em auto;
+  padding: 0.8em 2em;
+  border-radius: 10px;
+  background-color: #ffffff;
+  color: #161616;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.button:hover {
+  background-color: #dddddd;
+}
+
+.linkText {
+  color: #fff;
+  font-size: 1rem;
+  margin-top: 1em;
+}
