@@ -19,10 +19,12 @@ function Home() {
                           <p>Login as admin</p>
                       </button>
                   </Link>
+		  <Link to="/join">
                   <button className={styles.button}>
                       <h4>Join a Var</h4>
                       <p>Use the access code</p>
                   </button>
+		  </Link>
               </div>
           </div>
       )

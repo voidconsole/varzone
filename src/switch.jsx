@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 
 const Switcher = (props) => {
     const [isChecked, setIsChecked] = useState(props.checked || false)
@@ -22,7 +22,6 @@ const Switcher = (props) => {
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
     }
-
     const dotStyle = {
         position: "absolute",
         top: "-4px",
@@ -37,7 +36,6 @@ const Switcher = (props) => {
         justifyContent: "center",
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
     }
-
     const innerDotStyle = {
         width: "16px",
         height: "16px",
@@ -46,7 +44,6 @@ const Switcher = (props) => {
         border: isChecked ? "1px solid white" : "1px solid #1a1a1a",
         transition: "background-color 0.3s, border-color 0.3s",
     }
-
     return (
         <label
             style={{

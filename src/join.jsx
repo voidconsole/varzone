@@ -1,42 +1,126 @@
-import React from "react"
 import { useState } from "react"
-import styles from "./create.module.css"
+import styles from "./join.module.css"
 import app from "./firebase"
-import { getAuth } from "firebase/auth"
-import { Link, useLocation, useNavigate } from "react-router-dom"
-
+import { Link } from "react-router-dom"
+import { getAuth, signInAnonymously } from "firebase/auth"
+import { getDatabase, ref, set } from "firebase/database"
+import { useNavigate } from "react-router-dom"
 function JoinVar() {
+    const db = getDatabase()
     const [code, setCode] = useState("")
-
+    const [username, setUsername] = useState("")
+    const [warning, setWarning] = useState("")
     const auth = getAuth(app)
-
+    const navigate = useNavigate()
     function handleCode(e) {
         setCode(e.target.value)
     }
+    function handleUser(e) {
+        setUsername(e.target.value)
+    }
 
-
-    function handleClick(e) {}
+    function handleClick(e) {
+	    e.preventDefault()
+	if (code.length !== 8) {
+        setWarning("Access code must be exactly 8 characters long")
+        return
+    }else{
+		setWarning(null)
+    }
+        signInAnonymously(auth)
+            .then(userCredential => {
+                // Signed in
+                const user = userCredential.user
+                const accessCode = code.trim().slice(0, 5) 
+		const roleCode = code.trim().slice(5, 8) 
+                const varRef = ref(db, `accessCodes/${accessCode}`)
+                var data = undefined
+		var role = undefined
+                import("firebase/database").then(({ get }) => {
+                    get(varRef)
+                        .then(snapshot => {
+                            if (snapshot.exists()) {
+                                // Var exists, proceed (e.g., navigate or update state)
+                                data = snapshot.val()
+				console.log("Var Data:", data)
+				if (data.oratorCode=== roleCode) {
+				    role = "orators"
+				}else if (data.judgeCode === roleCode) {
+				    role = "judges"
+				}else if (data.spectatorCode === roleCode) {
+				    role = "spectators"
+				}else{
+				    setWarning("Invalid code")
+				}
+				console.log("Role:", role)
+                               
+                                set(
+                                    ref(
+                                        db,
+                                        `${data.adminUid}/${data.varId}/${role}`
+                                    ),
+                                    {
+                                        [user.uid] : username,
+                                    }
+                                )
+                                navigate("/create", {
+                                    state: {
+                                        uid: user.uid,
+                                        uname: username,
+                                        isAnon: user.isAnonymous,
+					isAdmin: false,
+					role: role,
+					data: data,
+                                    },
+                                })
+                            } else {
+                                console.error("Var not found")
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error reading var:", error)
+                        })
+                })
+            })
+            .catch(error => {
+                const errorCode = error.code
+                console.error(
+                    "Error signing in anonymously:",
+                    errorCode,
+                    error.message
+                )
+            })
+    }
     return (
         <div>
-            <form className={styles.JoinVar}>
-                <h1 className={styles.title}></h1>
-                <label className={styles.label} for="state"></label>
+            <form className={styles.joinVar}>
+                <h1 className={styles.title}>Join a Var</h1>
                 <input
                     type="text"
-                    onChange={handleClick}
-                    placeholder="A debate statement"
+                    onChange={handleUser}
+                    placeholder="Enter a username"
                     className={styles.input}
-                    name="statement"
+                    name="username"
+		    spellCheck="false"
                 />
+                <input
+                    type="text"
+                    onChange={handleCode}
+                    placeholder="Enter the access code"
+                    className={`${styles.input} ${styles.accessCode}`}
+                    name="code"
+		    spellCheck="false"
+                />
+                <label>{warning}</label>
                 <button
                     type="submit"
-                    onClick={handleLogin}
+                    onClick={handleClick}
                     className={styles.button}
                 >
                     Let's Goo
                 </button>
                 <p className={styles.linkText}>
-                    Don't have an account? <Link to="/register">Sign up</Link>
+                    Want to create a Var? <Link to="/register">Sign up</Link>
                 </p>
             </form>
         </div>

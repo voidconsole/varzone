@@ -4,13 +4,14 @@ import styles from "./create.module.css"
 import { getDatabase, ref, set } from "firebase/database"
 import {useLocation } from "react-router-dom"
 import Switcher from "./switch"
-import AlertDialog from "./alert"
+
+
 function CreateVar() {
     const db = getDatabase()
     const location = useLocation()
     const user = location.state
     const [resolution, setResolution] = useState("")
-    const [AI, setAI] = useState(false)
+    const [AI, setAI] = useState(false)	
     const [factions, setFactions] = useState(["Proposition", "Opposition"])
     const adminCode = makeCode(5)
     const varId = "var" + makeCode(3)
@@ -60,11 +61,6 @@ function CreateVar() {
                 score: 0,
             }
         })
-
-// const oraAccess = adminCode + oratorCode
-// const judgeAccess = adminCode + judgeCode
- // const spectatorAccess = adminCode + spectatorCode
-
         set(ref(db, `/${user.uid}/${varId}`), {
             resolution: resolution,
             factions: factionsObj,

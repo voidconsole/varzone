@@ -4,7 +4,7 @@ import styles from './login.module.css'
 import app from "./firebase"
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail} from "firebase/auth"
 import { Link, useNavigate } from "react-router-dom"
-import RegisterCard from './register';
+
 
 
 function LoginCard() {
@@ -57,7 +57,7 @@ signInWithEmailAndPassword(auth, email, password)
 	return (
         <div>
             <form className={styles.loginCard}>
-                <h1 className={styles.title}>Login to create a debate!</h1>
+                <h1 className={styles.title}>Login to create a Var!</h1>
                 <input
                     type="email"
                     onChange={handleEmail}
@@ -74,8 +74,8 @@ signInWithEmailAndPassword(auth, email, password)
                     {help === "Incorrect email or password. " ? (
                         <p id="help">
                             {help}
-                            <a onClick={()=>{sendPasswordResetEmail(auth, email)}}>
-                                Forgot?{" "}
+                            <a onClick={()=>{alert("Please check your mail");sendPasswordResetEmail(auth, email)}}>
+                                Forgot?
                             </a>
                         </p>
                     ) : (
@@ -98,4 +98,3 @@ signInWithEmailAndPassword(auth, email, password)
 }
 
 export default LoginCard;
-
