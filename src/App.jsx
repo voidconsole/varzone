@@ -6,6 +6,7 @@ import Home from './home'
 import RegisterCard from './register'
 import CreateVar from './create'
 import JoinVar from './join'
+import Varzone from './varzone'
 function App() {
 	console.log(
         `%c✦  W E L C O M E   T O   H E L L  ✦\n%c  “Abandon all hope, ye who enter here.”`,
@@ -20,7 +21,8 @@ function App() {
               <Route path="/login" element={<LoginCard />}></Route>
               <Route path="/register" element={<RegisterCard />}></Route>
               <Route path="/create" element={<CreateVar />}></Route>
-	      <Route path="/join" element={<JoinVar />}></Route>
+              <Route path="/join" element={<JoinVar />}></Route>
+              <Route path="/var" element={<Varzone />}></Route>
           </Routes>
       </>
   )
