@@ -1,0 +1,152 @@
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.904);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(15px);
+}
+
+.popup-container {
+	    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 3em 6em;
+    margin: 2em auto;
+    border: #252525 solid 0.3px;
+    border-radius: 20px;
+    background-color: #1a1a1a73;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.popup-title {
+    color: white;
+    font-size: 2em;
+    margin: 0.5em;
+}
+
+.faction-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    justify-content: center;
+    margin-bottom: 1.5em;
+}
+
+.faction-box {
+    padding: 0.75em 1.5em;
+    border-radius: 15px;
+    border: 1px solid gray;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.faction-box:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.faction-box.selected {
+    background-color: white;
+    color: black;
+}
+
+.next-button {
+    padding: 0.75em 2em;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.next-button:hover {
+    background-color: #e0e0e0;
+}
+
+.code-button {
+
+    width: 8em;
+    padding: 1em;
+    margin: none;
+    background-color: rgba(78, 78, 78, 0.219);
+    color: rgb(255, 255, 255);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.code-button:hover {
+    background-color: white;
+    border-color: transparent;
+    color: black;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.code-button:focus {
+    outline: transparent;
+    transition: background-color 0.6s ease, color 0.6s ease;
+}
+.code-button:active {
+    background-color: rgb(83, 83, 83);
+    transition: background-color 0.1s ease, color 0.6s ease;
+}
+
+.code-section ul {
+width: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+    border-radius: 8px;
+    padding: 0.5em;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+.code-section ul li {
+    padding: 0.4em 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+.code-section ul li:nth-child(1) {
+    background-image: linear-gradient(
+        50deg,
+        rgba(68, 118, 211, 0.2) 0%,
+        rgba(30, 202, 145, 0.15) 100%
+    );
+}
+.code-section ul li:nth-child(2) {
+    background-image: linear-gradient(
+        40deg,
+        rgba(79, 192, 79, 0.2) 0%,
+        rgba(236, 144, 24, 0.15) 100%
+    );
+}
+.code-section ul li:nth-child(3) {
+    background-image: linear-gradient(
+        30deg,
+        rgba(211, 68, 68, 0.2) 0%,
+        rgba(30, 30, 202, 0.15) 100%
+    );
+}
+.code-section h4 {
+    font-weight: 200;
+    color: white;
+}
+.code-section {
+	width: 100%;
+}
+.code-section ~ .next-button {
+width: 103.5%;
+}

@@ -1,41 +1,61 @@
-import { useState } from "react"
-import app from "./firebase"
-import { Link } from "react-router-dom"
-import { getAuth, signInAnonymously } from "firebase/auth"
-import { getDatabase, ref, set } from "firebase/database"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useState, useEffect } from "react"
+// import app from "./firebase"
+import { Link, useNavigate, useLocation } from "react-router-dom"
+// import { getAuth } from "firebase/auth"
+import { getDatabase, ref, get } from "firebase/database"
 import Faction from "./faction"
 import "./app.css"
 import styles from "./varzone.module.css"
 
-
 function Varzone() {
     const db = getDatabase()
     const navigate = useNavigate()
-    const auth = getAuth(app)
+//     const auth = getAuth(app)
     const location = useLocation()
-    const user = location.state
-//     db.ref("").on("value", snapshot => {
-// 	if (snapshot.exists()) {
-// 	    const data = snapshot.val()
-// 	    console.log("Access Codes:", data)
-// 	} else {
-// 	    console.log("No access codes found.")
-// 	}
-//     })
-    return (
-        <>
-            <h1>Debate statement</h1>
-            <div className={styles.factions}>
-                <Faction
-                    name="Proposition"
-                    members={["Alice", "Bob"]}
-                />
-                <Faction
-                    name="Opposition"
-                    members={["Charlie", "Dave"]}
-                />
+    const data = location.state
+    const [content, setContent] = useState(null)
 
+    useEffect(() => {
+        const contentRef = ref(db, `/${data.adminUID}/${data.varID}/`)
+        get(contentRef)
+            .then(snapshot => {
+                if (snapshot.exists()) {
+                    const val = snapshot.val()
+                    setContent(val)
+                    console.log("Data fetched successfully:", val)
+                } else {
+                    console.log("No access codes found.")
+                    navigate("/unauthorized")
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching access codes:", error)
+            })
+}, [db, data, navigate])
+
+if (!content) {
+    return <div>Loading...</div>
+}
+
+return (
+	<>
+	{console.log("Content:", content)}
+    
+        <h1>Debate statement</h1>
+        <dialog open>
+                {content ? JSON.stringify(content) : "Loading..."}
+            </dialog>
+            <div className={styles.factions}>
+                {content?.factions &&
+                    Object.keys(content.factions).map((faction, i) => (
+                        <Faction
+                            key={i}
+                            name={faction}
+                            members={content.factions[faction].members}
+                        //     varID={data.varID}
+                        //     adminUID={data.adminUID}
+                        />
+                    ))}
             </div>
         </>
     )

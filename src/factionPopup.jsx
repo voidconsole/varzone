@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-import "./factionPopup.css"
+import "./Popup.css"
 
 export default function FactionPopup({ factions = [], onSelect }) {
     const [selected, setSelected] = useState(null)
@@ -24,7 +24,9 @@ export default function FactionPopup({ factions = [], onSelect }) {
             document.removeEventListener("mousedown", handleClickOutside)
             document.removeEventListener("keydown", handleEscape)
         }
-    }, [])
+    }, [   
+	
+    ])
 
     return (
         <div className="popup-overlay">

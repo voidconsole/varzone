@@ -28,7 +28,29 @@ const AlertDialog = ({ onClose }) => {
                 alignItems: "center",
             }}
         >
-            <div className="createVar">
+            <div
+                style={{
+		// 	display:"block",
+		// 	position:"absolute",
+                //     backgroundColor: "rgba(24, 24, 24, 1)",
+                //     width: "50%",
+                //     height: "50%",
+                //    padding:"2em",
+		// border:"2px solid purple",
+		// borderRadius:"20px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flexDirection: "column",
+  padding: '2em',
+  margin: "2em auto",
+  border:" #646464 solid 0.3px",
+  bordeRadius: "20px",
+  backgroundColor: "#1a1a1a67",
+  textAlign: "center",
+                }}
+                
+            >
                 <h2 className="title">Your Var has been created!</h2>
 
                 {Object.entries(codes).map(([label, code]) => (

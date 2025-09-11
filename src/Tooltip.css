@@ -1,0 +1,40 @@
+.tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-box {
+    position: absolute;
+    bottom: 110%; /* Adjusted to give more space between the tooltip and the element */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(32, 32, 32); /* Matches the popup background */
+    color: #ffffff;
+
+    padding: 1em 1em;
+    border-radius: 8px;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+
+}
+
+.tooltip-wrapper:hover .tooltip-box {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-5px); /* Adds a slight upward animation */
+}
+
+.tooltip-box::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: rgb(41, 41, 41) transparent transparent transparent;
+}
