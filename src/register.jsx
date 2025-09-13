@@ -1,16 +1,16 @@
-import React from 'react';
-// import formik from 'formik'
+
 import { useState } from 'react';
 import styles from './register.module.css'
 import app from "./firebase"
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function RegisterCard() {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
-
+const [help, setHelp] = useState("")
 
 const auth = getAuth(app)
+const navigate = useNavigate()
 
 
 function handleEmail(e) {
@@ -26,12 +26,34 @@ createUserWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
         // Signed in
         const user = userCredential.user
-	
+        navigate("/create", {
+            state: {
+                uid: user.uid,
+                email: user.email,
+                uname: user.displayName,
+                isAnon: user.isAnonymous,
+            },
+        })
     })
     .catch(error => {
         const errorCode = error.code
-        const errorMessage = error.message
-	alert(errorMessage)
+        if (errorCode === "auth/invalid-email") {
+            setHelp("The email address is invalid.")
+        }
+        if (errorCode === "auth/email-already-exists") {
+            setHelp("This email is already in use.")
+        }
+	if (errorCode === "auth/email-already-in-use") {
+        setHelp("This email is already in use.")
+    }
+        if (errorCode === "auth/invalid-credential") {
+            setHelp("Incorrect email or password. ")
+        }
+	if (errorCode === "auth/weak-password") {
+        setHelp("Password is too weak.")
+    } else {
+        alert(error)
+    }
     })
 }
 	return (
@@ -49,6 +71,21 @@ createUserWithEmailAndPassword(auth, email, password)
                 placeholder="Create a password"
                 className={styles.input}
             />
+
+            {help === "This email is already in use." ? (
+                <p id="help">
+                    {help}
+                    <a
+                        onClick={() => {
+                            navigate("/login", {viewTransition: true})
+                        }}
+                    >
+                        {" Login instead"}
+                    </a>
+                </p>
+            ) : (
+                <p id="help">{help}</p>
+            )}
             <button
                 type="submit"
                 onClick={handleRegister}
@@ -57,9 +94,8 @@ createUserWithEmailAndPassword(auth, email, password)
                 Let's Goo
             </button>
             <p className={styles.linkText}>
-                Already have an account? <Link to="/login">Login</Link>
+                Already have an account? <Link to="/login" viewTransition>Login</Link>
             </p>
-            {}
         </form>
     )
 	

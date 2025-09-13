@@ -149,4 +149,5 @@ width: auto;
 }
 .code-section ~ .next-button {
 width: 103.5%;
+margin: 1.5em;
 }

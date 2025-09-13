@@ -70,17 +70,22 @@ signInWithEmailAndPassword(auth, email, password)
                     placeholder="Password"
                     className={styles.input}
                 />
-    
-                    {help === "Incorrect email or password. " ? (
-                        <p id="help">
-                            {help}
-                            <a onClick={()=>{alert("Please check your mail");sendPasswordResetEmail(auth, email)}}>
-                                Forgot?
-                            </a>
-                        </p>
-                    ) : (
-                        ""
-                    )}
+
+                {help === "Incorrect email or password. " ? (
+                    <p id="help">
+                        {help}
+                        <a
+                            onClick={() => {
+                                alert("Please check your mail")
+                                sendPasswordResetEmail(auth, email)
+                            }}
+                        >
+                            Forgot?
+                        </a>
+                    </p>
+                ) : (
+                    <p id="help">{help}</p>
+                )}
 
                 <button
                     type="submit"
@@ -90,7 +95,7 @@ signInWithEmailAndPassword(auth, email, password)
                     Let's Goo
                 </button>
                 <p className={styles.linkText}>
-                    Don't have an account? <Link to="/register">Sign up</Link>
+                    Don't have an account? <Link to="/register" viewTransition>Sign up</Link>
                 </p>
             </form>
         </div>

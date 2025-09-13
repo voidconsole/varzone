@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef } from "react"
 import { useState } from "react"
 import styles from "./create.module.css"
 import { getDatabase, ref, set } from "firebase/database"
@@ -16,8 +16,7 @@ function CreateVar() {
     const [resolution, setResolution] = useState("")
     const [AI, setAI] = useState(false)
     const [factions, setFactions] = useState(["Proposition", "Opposition"])
-    const [codes, setCodes] = useState(null)
-
+    const codesRef = useRef({})
     function makeCode(n) {
         var result = ""
         var characters =
@@ -41,26 +40,24 @@ function CreateVar() {
     function addLabel() {
         setFactions([...factions, ""])
     }
-function handleNext(isDone) {
-	if (isDone) {
-	setShowPopup(false)
-	}
-	else {
-navigate("/var", {
-    state: {
-        uid: user.uid,
-        // uname: username,
-        // isAnon: user.isAnonymous,
-        // isAdmin: true,
-        // role: role,
-        // faction: null,
-        // adminUID: data.adminUID,
-        // varID: data.varId,
-        codes: {codes }
-    },
-})
-	}
-}
+    function handleNext(isDone) {
+        if (!isDone) {
+            setShowPopup(false)
+        } else {
+            navigate("/var", {
+                state: {
+                    uid: user.uid,
+                    // uname: username,
+                    // isAnon: user.isAnonymous,
+                    // role: "admin",
+                    // faction: null,
+                    // adminUID: data.adminUID,
+                    // varID: data.varId,
+                    codes:  codesRef.current ,
+                },
+            })
+        }
+    }
 
     function handleLabelChange(e, index) {
         const newFactions = [...factions]
@@ -75,18 +72,16 @@ navigate("/var", {
 
     function handleCreate(e) {
         e.preventDefault()
-	const adminCode = makeCode(5)
-        const varId = "var" + makeCode(3)
-        const oratorCode = makeCode(3)
-        const judgeCode = makeCode(3)
-        const spectatorCode = makeCode(3)
-	setCodes({
-                        admin: adminCode,
-                        judge: judgeCode,
-                        orator: oratorCode,
-                        spectator: spectatorCode,
-			varId: varId
-                    })
+codesRef.current = {
+    admin: makeCode(5),
+    judge: makeCode(3),
+    orator: makeCode(3),
+    spectator: makeCode(3),
+    varId: "var" + makeCode(3),
+}
+	let codes = codesRef.current
+         
+        console.log("codes set in state", codes)
         const factionsObj = {}
         factions.forEach(value => {
             factionsObj[value] = {
@@ -101,24 +96,20 @@ navigate("/var", {
             judges: {},
             spectators: {},
         })
-	// TODO: fix following code, with firebase, doesnt work. or just make the sync between code createtion of firebase and copy copy popup. i.e avoid multiple funct code creation runs. 
-        set(ref(db, `/accessCodes/${adminCode}`), {
+
+        set(ref(db, `/accessCodes/${codes.admin}`), {
             adminUID: user.uid,
             varId: codes.varId,
             oratorCode: codes.orator,
             judgeCode: codes.judge,
             spectatorCode: codes.spectator,
         })
+        console.log("codes set in db", codes)
         setShowPopup(true)
     }
     return (
         <div>
-            {showPopup && (
-                <CopyCode
-                    code={codes}
-		    onSelect={handleNext}
-                />
-            )}
+            {showPopup && <CopyCode code={codesRef.current} onSelect={handleNext} />}
             <form className={styles.createVar}>
                 <h1 className={styles.title}>Let's create a Var</h1>
 
@@ -164,9 +155,9 @@ navigate("/var", {
                     </ul>
                 </div>
                 <div className={styles.switcher}>
-		<Tooltip text="Allows an AI to cast a vote">
-                    AI Evaluator:
-		</Tooltip>
+                    <Tooltip text="Allows an AI to cast a vote">
+                        AI Evaluator:
+                    </Tooltip>
                     <Switcher checked={AI} onChange={handleAI}></Switcher>
                 </div>
                 <button

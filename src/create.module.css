@@ -1,12 +1,12 @@
 .createVar {
-    width: 60%;
+    width: 70vw;
+    max-width: 40em;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     padding: 2em;
     margin: 2em auto;
-
     border: #646464 solid 0.3px;
     border-radius: 20px;
     background-color: #1a1a1a67;

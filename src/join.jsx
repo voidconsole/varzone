@@ -53,7 +53,6 @@ function JoinVar() {
                             uid: user.uid,
                             uname: username,
                             isAnon: user.isAnonymous,
-                            isAdmin: false,
                             role: role,
                             faction: pickedFaction,
                             adminUID: data.adminUID,
@@ -104,7 +103,6 @@ function JoinVar() {
                                 ).then(snapshot => {
                                     if (snapshot.exists()) {
                                        
-
                                         setFactions(
                                             Object.keys(snapshot.val()) || []
                                         )
@@ -129,7 +127,7 @@ function JoinVar() {
                                             uid: user.uid,
                                             uname: username,
                                             isAnon: user.isAnonymous,
-                                            isAdmin: false,
+        
                                             role: role,
                                             faction: null,
                                             adminUID: data.adminUID,
@@ -153,7 +151,7 @@ function JoinVar() {
                                             uid: user.uid,
                                             uname: username,
                                             isAnon: user.isAnonymous,
-                                            isAdmin: false,
+        
                                             role: role,
                                             faction: null,
                                             adminUID: data.adminUID,
@@ -187,15 +185,15 @@ function JoinVar() {
     }
     return (
         <div>
+            {showPopup && (
+                <FactionPopup
+                    factions={factions}
+                    onSelect={handleFactionSelect}
+                />
+            )}
             <form className={styles.joinVar}>
                 <h1 className={styles.title}>Join a Var</h1>
-		
-                {showPopup && (
-                    <FactionPopup
-                        factions={factions}
-                        onSelect={handleFactionSelect}
-                    />
-                )}
+
                 <input
                     type="text"
                     onChange={handleUser}

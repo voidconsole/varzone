@@ -1,4 +1,6 @@
 .registerCard {
+	    width: 70vw;
+    max-width: 40em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,12 +35,14 @@
   margin: 1em auto;
   border: 1px solid #ccc;
   color: white;
+
 }
 
 .button {
-	  width: 87.5%;
-  margin: 1em auto;
-  padding: 0.8em 2em;
+display: block;
+  width: 80%;
+  margin: 0.5em auto;
+  padding: 0.8em 1em;
   border-radius: 10px;
   background-color: #ffffff;
   color: #161616;
@@ -46,6 +50,7 @@
   border: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  box-sizing: content-box;
 }
 
 .button:hover {

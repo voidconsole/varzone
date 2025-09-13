@@ -1,5 +1,6 @@
 .joinVar {
-    width: 60%;
+    width: 70vw;
+    max-width: 40em;
     display: flex;
     justify-content: center;
     align-items: center;

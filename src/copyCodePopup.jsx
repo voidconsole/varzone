@@ -6,13 +6,14 @@ export default function CopyCode({ code, onSelect }) {
     const popupRef = useRef()
     const handleClickOutside = e => {
         if (popupRef.current && !popupRef.current.contains(e.target)) {
-            onSelect(null)
+            onSelect(false)
         }
     }
+    console.log("codes in popup", code)
 
     const handleEscape = e => {
         if (e.key === "Escape") {
-            onSelect(null)
+            onSelect(false)
         }
     }
     const handleCopy = code => {
