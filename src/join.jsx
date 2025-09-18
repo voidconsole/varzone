@@ -47,7 +47,6 @@ function JoinVar() {
                 }
             )
                 .then(() => {
-                    // Navigate after successful database update
                     navigate("/var", {
                         state: {
                             uid: user.uid,
@@ -79,7 +78,6 @@ function JoinVar() {
 
         signInAnonymously(auth)
             .then(userCredential => {
-                // Signed in
                 const user = userCredential.user
                 const accessCode = code.trim().slice(0, 5)
                 const roleCode = code.trim().slice(5, 8)
@@ -89,10 +87,8 @@ function JoinVar() {
                 get(ref(db, `accessCodes/${accessCode}`))
                     .then(snapshot => {
                         if (snapshot.exists()) {
-                            // Var exists, proceed (e.g., navigate or update state)
-                            data = snapshot.val()
-                            
 
+                            data = snapshot.val()
                             if (data.oratorCode === roleCode) {
                                 role = "orators"
                                 get(
@@ -106,7 +102,6 @@ function JoinVar() {
                                         setFactions(
                                             Object.keys(snapshot.val()) || []
                                         )
-                                        // Store the user data for when faction is selected
                                         setPendingUserData({ user, data, role })
                                         setShowPopup(true)
                                     }
@@ -127,7 +122,6 @@ function JoinVar() {
                                             uid: user.uid,
                                             uname: username,
                                             isAnon: user.isAnonymous,
-        
                                             role: role,
                                             faction: null,
                                             adminUID: data.adminUID,
@@ -151,7 +145,6 @@ function JoinVar() {
                                             uid: user.uid,
                                             uname: username,
                                             isAnon: user.isAnonymous,
-        
                                             role: role,
                                             faction: null,
                                             adminUID: data.adminUID,

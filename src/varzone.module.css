@@ -6,31 +6,30 @@
     height: calc(100% - 2.6em);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-	white-space: pre-wrap;
-	word-break: break-all;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-
+    white-space: pre-wrap;
+    word-break: break-all;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f100;
+    background: #f1f1f100;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+    background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+    background: #555;
 }
 #name {
     font-weight: 600;
@@ -64,27 +63,26 @@
     text-align: center;
     grid-template-columns: repeat(2, 1fr);
 }
-.messageBox{
+.messageBox {
     text-align: left;
     margin: 1em 0;
 }
-.sender{
-	display: block;
-	font-weight: 600;
-
+.sender {
+    display: block;
+    font-weight: 600;
 }
-.messages{
-	display: bloack;
-	height: 90%;
-
-	font-weight: 200;
-	color: #ffffff;
+.messages {
+    display: block;
+    height: 90%;
+/* TODO: Fix overflow  */
+    font-weight: 200;
+    color: #ffffff;
 }
-.message{
-	margin-left: 0.5em;
-	display: block;
-	font-weight: 300;
-	color: #ffffff;
+.message {
+    margin-left: 0.5em;
+    display: block;
+    font-weight: 300;
+    color: #ffffff;
 }
 .title {
     font-weight: 800;
@@ -94,25 +92,76 @@
     display: block;
 }
 
-.input {
-
-	position: relative;
-	bottom: 0px;
+#input {
+    position: relative;
+    bottom: 0px;
     background-color: transparent;
     display: block;
-    height: 3em;
-    border-radius: 20px 20px ;
+    height: calc(100% - 0.4em);
+    width: 100%;
+    border-radius: 8px;
     padding: 0.2em 1em;
-
+    border: transparent;
+    color: white;
+}
+#input:focus{
+	    outline: none;
+	    border: none;
+}
+/* #inputBox:focus-within {
+    transition: border 0.4s ease;
+    outline: none;
+    border: 1px solid #c9c9c986;
+} */
+#inputBox{
+    position: relative;
+    bottom: 0px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 3em;
+    border-radius: 8px;
+    padding: 0;
     border: 1px solid #ffffff36;
     color: white;
 }
-.input:focus {
-transition: border 0.4s ease;
-outline: none;
-border: 1px solid #c9c9c986;
+@keyframes send {
+    0%,100%{
+        opacity: 1;
+    }
+    50% {
+	opacity: 0;
+     	  transform: translateX(20px) scale(0.8) rotate(-10deg);
 
+    }
+    51%{
+     	  transform: translateX(-20px) scale(0.8) rotate(10deg);
+    }
 }
+#send {
+    background-color: transparent;
+    border: none !important;
+    color: rgba(255, 255, 255, 0.521);
+    outline: none !important;
+    padding: 0 1em 0.2em 1em;
+}
+#send:hover {
+    color: #ffffffd8;
+    cursor: pointer;
+}
+#send:focus {
+animation: send 1s ease forwards;
+    outline: none;
+    border: none;
+}
+#send:active {
+animation: send 1s ease forwards;
+    outline: none;
+    border: none;
+}
+
+
 .button {
     width: 87.5%;
     margin: 1em auto;

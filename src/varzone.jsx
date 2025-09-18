@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Link, useNavigate, useLocation } from "react-router-dom"
+import {useNavigate, useLocation } from "react-router-dom"
 import { getDatabase, ref, get } from "firebase/database"
 import Faction from "./faction"
 import "./app.css"
@@ -92,8 +92,12 @@ function Varzone() {
                         name={faction}
                         score={content.factions[faction].score}
                         members={content.factions[faction].orators}
-                        messages={content.factions[faction].messages}
-			isMember={data.faction===faction}
+                        // messages={content.factions[faction].messages}
+                        // isMember={Object.keys(
+                        //     content.factions[faction].orators
+                        // ).includes(data.uid)}
+			uid={data.uid}
+                        path={`/${data.adminUID}/${data.varID}/factions/${faction}`}
                     />
                 ))}
             </div>
