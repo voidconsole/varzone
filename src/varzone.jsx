@@ -9,7 +9,7 @@ function Varzone() {
     const navigate = useNavigate()
     const location = useLocation()
     const data = location.state
-
+//hello world 
     const [content, setContent] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -82,9 +82,10 @@ function Varzone() {
         }
     }
 
+
     return (
         <>
-            <h1>Resolution: {content.resolution}</h1>
+            <h1 id={styles.resolution}>Resolution: {content.resolution}</h1>
             <div id={styles.factions} style={gridStyle}>
                 {Object.keys(content.factions).map((faction, i) => (
                     <Faction

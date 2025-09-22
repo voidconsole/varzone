@@ -10,16 +10,22 @@
     word-break: break-all;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start; 
+    overflow: hidden; 
 }
-
+#resolution {
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 4em;
+    margin: 0;
+    text-align: center;
+}
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 3px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f100;
+    background: #f1f1f10a;
 }
 
 /* Handle */
@@ -47,12 +53,12 @@
 }
 #factions {
     width: 85%;
-    height: 100%;
+    height: 75vh; /* Use viewport height instead of 100% */
     display: grid;
     gap: 1.1em;
     justify-content: space-around;
     align-items: center;
-    padding: 1.3em;
+    padding: 1em;
     margin: 2em auto;
     border: #64646463 solid 0.3px;
     background-color: #16161667;
@@ -72,11 +78,11 @@
     font-weight: 600;
 }
 .messages {
-    display: block;
-    height: 90%;
-/* TODO: Fix overflow  */
+    flex-grow: 1;
+    overflow-y: auto;
     font-weight: 200;
     color: #ffffff;
+    min-height: 0; /* This is the key to constrain the flex item */
 }
 .message {
     margin-left: 0.5em;
@@ -104,16 +110,16 @@
     border: transparent;
     color: white;
 }
-#input:focus{
-	    outline: none;
-	    border: none;
+#input:focus {
+    outline: none;
+    border: none;
 }
 /* #inputBox:focus-within {
     transition: border 0.4s ease;
     outline: none;
     border: 1px solid #c9c9c986;
 } */
-#inputBox{
+#inputBox {
     position: relative;
     bottom: 0px;
     background-color: transparent;
@@ -121,22 +127,24 @@
     flex-direction: row;
     justify-content: space-between;
     height: 3em;
+    margin-top: 1em;
+    flex-shrink: 0; /* Prevent this element from shrinking */
     border-radius: 8px;
     padding: 0;
     border: 1px solid #ffffff36;
     color: white;
 }
 @keyframes send {
-    0%,100%{
+    0%,
+    100% {
         opacity: 1;
     }
     50% {
-	opacity: 0;
-     	  transform: translateX(20px) scale(0.8) rotate(-10deg);
-
+        opacity: 0;
+        transform: translateX(20px) scale(0.8) rotate(-10deg);
     }
-    51%{
-     	  transform: translateX(-20px) scale(0.8) rotate(10deg);
+    51% {
+        transform: translateX(-20px) scale(0.8) rotate(10deg);
     }
 }
 #send {
@@ -151,16 +159,15 @@
     cursor: pointer;
 }
 #send:focus {
-animation: send 1s ease forwards;
+    animation: send 1s ease forwards;
     outline: none;
     border: none;
 }
 #send:active {
-animation: send 1s ease forwards;
+    animation: send 1s ease forwards;
     outline: none;
     border: none;
 }
-
 
 .button {
     width: 87.5%;
