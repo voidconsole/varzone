@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from "react"
 import "./app.css"
 import styles from "./varzone.module.css"
 import { getDatabase, ref, onValue, set } from "firebase/database"
+import Tooltip from "./Tooltip"
 const Pastels = [
     "#f58d78ff",
     "#ec7e7eff",
@@ -18,13 +19,13 @@ const Pastels = [
     "#6397e9ff",
     "#6274e9ff",
 ]
+let canVote = false;
 function Faction(props) {
     const messageRef = useRef("")
     const [data, setData] = useState({})
     const isMember = data.orators
-        ? Object.keys(data.orators).includes(props.uid)
-        : false
-
+    ? Object.keys(data.orators).includes(props.uid)
+    : false
     const db = getDatabase()
     useEffect(() => {
         // Register the onValue listener
@@ -36,14 +37,26 @@ function Faction(props) {
         // Cleanup the listener when the component unmounts
         return () => unsubscribe()
     }, [db, props.path])
-
     const colors = {}
     if (data.orators) {
         Object.values(data.orators).forEach(member => {
             colors[member] = Pastels[Math.floor(Math.random() * Pastels.length)]
         })
     }
-
+    if(data.messages && props.role=="judges" && !isMember){
+	    console.log(parseInt(Object.keys(data.messages).length) % parseInt(props.modulus))
+        if (parseInt(Object.keys(data.messages).length) % parseInt(props.modulus) == 0) {
+            canVote = true
+        }
+    }
+    const handleVote = e => {
+	e.preventDefault()
+	if (props.role=="judges" ) {
+		const newScore = (data.score || 0) + 1
+		set(ref(db, `${props.path}/score`), newScore)
+		canVote = false
+	}
+}
     const send = e => {
         e.preventDefault()
         document.getElementById(styles.send).focus()
@@ -59,20 +72,26 @@ function Faction(props) {
             })
         }
     }
-    console.log(props.name)
     const messagesEndRef = useRef(null)
-
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
     }
-
     useEffect(() => {
         scrollToBottom()
     }, [data.messages])
-
     return (
         <div className={styles.faction}>
-            <h1 id={styles.name}>{props.name}</h1>
+            <div className={styles.titleBar}>
+		<h1 className={styles.name}>{props.name}</h1>
+		{props.role=="judges" ? 
+		<div className={styles.voteBox}>
+		<h1 className={styles.score}>{data.score}</h1>
+			<button className={styles.vote} onClick={handleVote} disabled={!canVote}>+</button>
+			</div>
+		:<h1 className={styles.score}>{data.score}</h1>
+			}
+		</div>
+		<hr />
             <div className={styles.messages}>
                 {data.messages
                     ? Object.keys(data.messages)
@@ -101,7 +120,7 @@ function Faction(props) {
                     : null}
                 <div ref={messagesEndRef} />
             </div>
-            {isMember ? (
+            {isMember && props.role=="orators" ? (
                 <div id={styles.inputBox}>
                     <input
                         type="text"

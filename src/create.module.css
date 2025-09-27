@@ -43,7 +43,7 @@
 
 .button {
     width: 85%;
-    margin: 1em auto;
+    margin: 4em auto 2em;
     padding: 0.8em 2em;
     border-radius: 10px;
     background-color: #ffffff;
@@ -53,28 +53,37 @@
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
-
 .button:hover {
     background-color: #dddddd;
 }
-
 .linkText {
     color: #fff;
     font-size: 1rem;
     margin-top: 1em;
 }
-.switcher {
+.switcher, .modulus {
     width: 82.5%;
     height: 3em;
     border-radius: 8px;
     padding: 0.5em 1em;
-    margin: 1em auto;
+    margin:  auto;
     align-items: center;
     justify-content: space-between;
     color: white;
     background-color: transparent;
     display: flex;
     flex-direction: row;
+}
+.modulusInput{
+	background-color: transparent;
+	border: none;
+	color: white;
+	height: 100%;
+	font-size: 1.5em;
+	text-align: center;
+}
+.modulusInput:focus{
+	outline: none;
 }
 .factions {
     display: flex;
@@ -87,7 +96,6 @@
 }
 .factions ul {
     display: grid;
-
     grid-template-columns: repeat(3, 1fr);
     border-radius: 8px;
     padding: 0.5em;

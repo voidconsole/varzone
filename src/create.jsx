@@ -17,6 +17,7 @@ function CreateVar() {
     const [AI, setAI] = useState(false)
     const [factions, setFactions] = useState(["Proposition", "Opposition"])
     const codesRef = useRef({})
+    const modulusRef = useRef(null)
     function makeCode(n) {
         var result = ""
         var characters =
@@ -47,12 +48,12 @@ function CreateVar() {
             navigate("/var", {
                 state: {
                     uid: user.uid,
-                    // uname: username,
-                    // isAnon: user.isAnonymous,
-                    // role: "admin",
-                    // faction: null,
-                    // adminUID: data.adminUID,
-                    // varID: data.varId,
+                    uname: null,
+                    isAnon: false,
+                    role: "admin",
+                    faction: null,
+                    adminUID: user.uid,
+                    varID: null,
                     codes:  codesRef.current ,
                 },
             })
@@ -92,6 +93,8 @@ codesRef.current = {
             resolution: resolution,
             factions: factionsObj,
             AI: AI,
+	    modulus: parseInt(modulusRef.current.value) || 5,
+	    created: Date.now(),
             orators: {},
             judges: {},
             spectators: {},
@@ -109,7 +112,9 @@ codesRef.current = {
     }
     return (
         <div>
-            {showPopup && <CopyCode code={codesRef.current} onSelect={handleNext} />}
+            {showPopup && (
+                <CopyCode code={codesRef.current} onSelect={handleNext} />
+            )}
             <form className={styles.createVar}>
                 <h1 className={styles.title}>Let's create a Var</h1>
 
@@ -159,6 +164,20 @@ codesRef.current = {
                         AI Evaluator:
                     </Tooltip>
                     <Switcher checked={AI} onChange={handleAI}></Switcher>
+                </div>
+                <div className={styles.modulus}>
+                    <Tooltip text="Set after how many messages a vote can be cast">
+                        Vote Frequency:
+                    </Tooltip>
+                    <input
+			type="number"
+			min="1"
+			max="50"
+			ref={modulusRef}
+			defaultValue="5"
+			className={styles.modulusInput}
+			name="modulus"
+		    />
                 </div>
                 <button
                     type="submit"

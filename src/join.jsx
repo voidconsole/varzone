@@ -15,28 +15,20 @@ function JoinVar() {
     const [showPopup, setShowPopup] = useState(false)
     const auth = getAuth(app)
     const [factions, setFactions] = useState([])
-
     // Store user and data for when faction is selected
     const [pendingUserData, setPendingUserData] = useState(null)
-
     const navigate = useNavigate()
-
     function handleCode(e) {
         setCode(e.target.value)
     }
-
     function handleUser(e) {
         setUsername(e.target.value)
     }
-
     function handleFactionSelect(pickedFaction) {
         setShowPopup(false)
-
         // Now complete the database operation with the selected faction
         if (pendingUserData) {
             const { user, data, role } = pendingUserData
-
-
             set(
                 ref(
                     db,
@@ -65,17 +57,14 @@ function JoinVar() {
                 })
         }
     }
-
     function handleClick(e) {
         e.preventDefault()
-
         if (code.length !== 8) {
             setWarning("Access code must be exactly 8 characters long")
             return
         } else {
             setWarning(null)
         }
-
         signInAnonymously(auth)
             .then(userCredential => {
                 const user = userCredential.user
@@ -87,7 +76,6 @@ function JoinVar() {
                 get(ref(db, `accessCodes/${accessCode}`))
                     .then(snapshot => {
                         if (snapshot.exists()) {
-
                             data = snapshot.val()
                             if (data.oratorCode === roleCode) {
                                 role = "orators"

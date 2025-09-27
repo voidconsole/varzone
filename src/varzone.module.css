@@ -37,19 +37,58 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
-#name {
+.name {
     font-weight: 600;
     color: #ffffff;
     font-size: 1.7rem;
     margin: 0;
+    margin-left: 0.5em;
 }
-#name::after {
-    display: block;
-    content: "";
-    background-color: #ffffff36;
+.titleBar{
+	    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    margin: 0.5em auto;
-    height: 1px;
+
+}
+hr {
+ display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #e4e4e450;
+  margin: 1em 0;
+  padding: 0;
+}
+.score{
+font-weight: 600;
+    color: #ffffff;
+    font-size: 2.5em;
+    margin: 0.1em 0.4em 0 0;
+}
+.voteBox{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: end;
+}
+.vote{
+	width: 1em;
+	background-color: transparent;
+	padding: 0;
+	border: none;
+	color: #ffffff;
+	font-size: 2em;
+	cursor: pointer;
+}
+.vote:disabled{
+	color: #555555;
+	cursor: not-allowed;
+}
+.vote:focus{
+	outline: none;
+}
+.vote:hover{
+	color: #9395f8;
 }
 #factions {
     width: 85%;
