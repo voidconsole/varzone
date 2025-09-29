@@ -23,6 +23,7 @@ body {
     flex-direction: column;
     justify-content: center; /* Center body content horizontally */
     align-items: center; /* Center body content vertically */
+    
 }
 
 @font-face {
@@ -31,6 +32,7 @@ body {
 }
 * {
     font-family: trip-sans !important;
+    outline:none !important;
 }
 .glass {
     -webkit-backdrop-filter: blur(10px);

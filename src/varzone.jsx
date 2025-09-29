@@ -75,6 +75,7 @@ function Varzone() {
     return (
         <>
             <h1 id={styles.resolution}>Resolution: {content.resolution}</h1>
+
             <div id={styles.factions} style={gridStyle}>
                 {Object.keys(content.factions).map((faction, i) => (
                     <Faction
@@ -87,6 +88,7 @@ function Varzone() {
                         // isMember={Object.keys(
                         //     content.factions[faction].orators
                         // ).includes(data.uid)}
+			resolution={content.resolution}
 			modulus={content.modulus}
 			uid={data.uid}
 			ai={content.factions[faction].ai}

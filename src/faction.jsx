@@ -3,6 +3,7 @@ import "./app.css"
 import styles from "./varzone.module.css"
 import { getDatabase, ref, onValue, set } from "firebase/database"
 import Tooltip from "./Tooltip"
+import { getAIVote } from "./voter" // Updated import
 const Pastels = [
     "#f58d78ff",
     "#ec7e7eff",
@@ -19,13 +20,13 @@ const Pastels = [
     "#6397e9ff",
     "#6274e9ff",
 ]
-let canVote = false;
+let canVote = false
 function Faction(props) {
     const messageRef = useRef("")
     const [data, setData] = useState({})
     const isMember = data.orators
-    ? Object.keys(data.orators).includes(props.uid)
-    : false
+        ? Object.keys(data.orators).includes(props.uid)
+        : false
     const db = getDatabase()
     useEffect(() => {
         // Register the onValue listener
@@ -43,20 +44,72 @@ function Faction(props) {
             colors[member] = Pastels[Math.floor(Math.random() * Pastels.length)]
         })
     }
-    if(data.messages && props.role=="judges" && !isMember){
-	    console.log(parseInt(Object.keys(data.messages).length) % parseInt(props.modulus))
-        if (parseInt(Object.keys(data.messages).length) % parseInt(props.modulus) == 0) {
+    if (data.messages && props.role == "judges" && !isMember) {
+        if (
+            parseInt(Object.keys(data.messages).length) %
+                parseInt(props.modulus) ==
+            0
+        ) {
             canVote = true
         }
     }
+
+    // Prepare data for the Voter component
+    let lastMessages = null
+    const shouldTriggerAIVote =
+        data.messages &&
+        props.role === "admin" &&
+        Object.keys(data.messages).length > 0 &&
+        Object.keys(data.messages).length % parseInt(props.modulus) === 0
+
+    if (shouldTriggerAIVote) {
+        lastMessages = Object.keys(data.messages)
+            .sort((a, b) => parseInt(a.slice(1)) - parseInt(b.slice(1)))
+            .slice(-props.modulus)
+            .reduce((obj, key) => {
+                obj[key] = data.messages[key]
+                return obj
+            }, {})
+    }
+
+    useEffect(() => {
+        if (shouldTriggerAIVote && lastMessages) {
+            const performAIVote = async () => {
+                console.log("Requesting AI vote for faction:", props.name)
+                const voteResult = await getAIVote(lastMessages, {
+                    resolution: props.resolution,
+                    faction: props.name,
+                })
+                console.log("AI Vote Result:", voteResult)
+                // You can now use the voteResult, for example, by updating the score
+                if (voteResult && !isNaN(parseInt(voteResult))) {
+                    const voteValue = parseInt(voteResult.match(/\d+/)[0])
+                    if (voteValue === 1) {
+                        const newScore = (data.score || 0) + 1
+                        set(ref(db, `${props.path}/score`), newScore)
+                    }
+                }
+            }
+            performAIVote()
+        }
+    }, [
+        shouldTriggerAIVote,
+        lastMessages,
+        props.name,
+        props.path,
+        props.resolution,
+        db,
+        data.score,
+    ]) 
+
     const handleVote = e => {
-	e.preventDefault()
-	if (props.role=="judges" ) {
-		const newScore = (data.score || 0) + 1
-		set(ref(db, `${props.path}/score`), newScore)
-		canVote = false
-	}
-}
+        e.preventDefault()
+        if (props.role == "judges") {
+            const newScore = (data.score || 0) + 1
+            set(ref(db, `${props.path}/score`), newScore)
+            canVote = false
+        }
+    }
     const send = e => {
         e.preventDefault()
         document.getElementById(styles.send).focus()
@@ -82,16 +135,23 @@ function Faction(props) {
     return (
         <div className={styles.faction}>
             <div className={styles.titleBar}>
-		<h1 className={styles.name}>{props.name}</h1>
-		{props.role=="judges" ? 
-		<div className={styles.voteBox}>
-		<h1 className={styles.score}>{data.score}</h1>
-			<button className={styles.vote} onClick={handleVote} disabled={!canVote}>+</button>
-			</div>
-		:<h1 className={styles.score}>{data.score}</h1>
-			}
-		</div>
-		<hr />
+                <h1 className={styles.name}>{props.name}</h1>
+                {props.role == "judges" ? (
+                    <div className={styles.voteBox}>
+                        <h1 className={styles.score}>{data.score}</h1>
+                        <button
+                            className={styles.vote}
+                            onClick={handleVote}
+                            disabled={!canVote}
+                        >
+                            +
+                        </button>
+                    </div>
+                ) : (
+                    <h1 className={styles.score}>{data.score}</h1>
+                )}
+            </div>
+            <hr />
             <div className={styles.messages}>
                 {data.messages
                     ? Object.keys(data.messages)
@@ -120,7 +180,7 @@ function Faction(props) {
                     : null}
                 <div ref={messagesEndRef} />
             </div>
-            {isMember && props.role=="orators" ? (
+            {isMember && props.role == "orators" ? (
                 <div id={styles.inputBox}>
                     <input
                         type="text"

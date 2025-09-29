@@ -48,13 +48,12 @@ function CreateVar() {
             navigate("/var", {
                 state: {
                     uid: user.uid,
-                    uname: null,
-                    isAnon: false,
+                    uname: "admin",
+                    isAnon: user.isAnonymous,
                     role: "admin",
                     faction: null,
                     adminUID: user.uid,
-                    varID: null,
-                    codes:  codesRef.current ,
+                    varID: codesRef.current.varId,
                 },
             })
         }
