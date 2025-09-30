@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import {useNavigate, useLocation } from "react-router-dom"
 import { getDatabase, ref, get } from "firebase/database"
 import Faction from "./faction"
-import "./app.css"
+import "./App.css"
 import styles from "./varzone.module.css"
 function Varzone() {
     const navigate = useNavigate()

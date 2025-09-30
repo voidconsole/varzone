@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react"
-import "./app.css"
+import "./App.css"
 import styles from "./varzone.module.css"
 import { getDatabase, ref, onValue, set } from "firebase/database"
 import Tooltip from "./Tooltip"
