@@ -30,7 +30,7 @@ They should feel like **games**—fast, fiery, and fun.
 * Votes are the **scoreboard**.
 
 Gamified. Competitive. Addictive.
-The kind of place where arguments don’t spiral into chaos—they’re **sharpened into duels**.
+The kind of place where arguments don’t spiral into chaos; they’re **sharpened into duels**.
 
 ---
 
@@ -57,9 +57,9 @@ The kind of place where arguments don’t spiral into chaos—they’re **sharpe
 ## 🏆 What Makes Varzone Different?
 
 * It’s not just talk. It’s **war, structured**.
-* AI isn’t your replacement—it’s your rival judge.
+* AI isn’t your replacement; it’s your rival judge.
 * Every debate has an **endgame**, no endless loops.
-* You don’t just “argue”—you **play**.
+* You don’t just “argue”; you **play**.
 
 ---
 
