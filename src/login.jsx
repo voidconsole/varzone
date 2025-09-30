@@ -30,7 +30,6 @@ function handleLogin(e) {
 
 signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
-        // Signed in
         const user = userCredential.user
 	navigate("/create", { state: { uid: user.uid, email: user.email, uname:user.displayName, isAnon: user.isAnonymous} })
     })

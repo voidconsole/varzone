@@ -15,7 +15,6 @@ function JoinVar() {
     const [showPopup, setShowPopup] = useState(false)
     const auth = getAuth(app)
     const [factions, setFactions] = useState([])
-    // Store user and data for when faction is selected
     const [pendingUserData, setPendingUserData] = useState(null)
     const navigate = useNavigate()
     function handleCode(e) {
@@ -26,7 +25,6 @@ function JoinVar() {
     }
     function handleFactionSelect(pickedFaction) {
         setShowPopup(false)
-        // Now complete the database operation with the selected faction
         if (pendingUserData) {
             const { user, data, role } = pendingUserData
             const updates = {}

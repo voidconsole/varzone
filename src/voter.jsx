@@ -22,11 +22,9 @@ const Voter = ({ messages, data }) => {
 
         const initializeAI = async () => {
             const apiKey = await fetchTextFromUrl(url)
-            //     const apiKey = "AIzaSyB2aUEShomKcH89YeDexUDqMI42qE9-rMk"
             if (apiKey) {
                 const ai = new GoogleGenAI({ apiKey })
                 const vote = await getVote(ai, JSON.stringify(messages), data)
-                console.log("AI Vote:", vote)
             }
         }
 

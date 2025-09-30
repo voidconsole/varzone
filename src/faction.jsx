@@ -75,18 +75,15 @@ function Faction(props) {
     useEffect(() => {
         if (shouldTriggerAIVote && lastMessages) {
             const performAIVote = async () => {
-                console.log("Requesting AI vote for faction:", props.name)
                 const voteResult = await getAIVote(lastMessages, {
                     resolution: props.resolution,
                     faction: props.name,
                 })
                 console.log("AI Vote Result:", voteResult)
-                // You can now use the voteResult, for example, by updating the score
                 if (voteResult && !isNaN(parseInt(voteResult))) {
                     const voteValue = parseInt(voteResult.match(/\d+/)[0])
                     if (voteValue === 1) {
                         const newScore = (data.score || 0) + 1
-                        // Safe to use set for leaf value (score)
                         set(ref(db, `${props.path}/score`), newScore)
                     }
                 }
@@ -107,7 +104,6 @@ function Faction(props) {
         e.preventDefault()
         if (props.role == "judges") {
             const newScore = (data.score || 0) + 1
-            // Safe to use set for leaf value (score)
             set(ref(db, `${props.path}/score`), newScore)
             canVote = false
         }
@@ -117,12 +113,10 @@ function Faction(props) {
         document.getElementById(styles.send).focus()
         const message = messageRef.current.value.trim()
         if (message !== "" && isMember) {
-            console.log("Sending:", message)
             messageRef.current.value = ""
             const messageKey = `m${
                 data.messages ? Object.keys(data.messages).length + 1 : 1
             }`
-            // Safe to use set for new message node
             set(ref(db, `${props.path}/messages/${messageKey}`), {
                 [data.orators[props.uid]]: message,
             })

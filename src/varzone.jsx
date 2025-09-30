@@ -25,7 +25,6 @@ function Varzone() {
                 if (snapshot.exists()) {
                     const val = snapshot.val()
                     setContent(val)
-                    console.log("Data fetched successfully:", val)
                 } else {
                     console.warn("No data found for the given path.")
                     if (!data.isAdmin) {

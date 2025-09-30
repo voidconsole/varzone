@@ -9,7 +9,6 @@ export default function CopyCode({ code, onSelect }) {
             onSelect(false)
         }
     }
-    console.log("codes in popup", code)
 
     const handleEscape = e => {
         if (e.key === "Escape") {
@@ -21,7 +20,6 @@ export default function CopyCode({ code, onSelect }) {
             .writeText(code)
             .then(() => {})
             .catch(() => {
-                console.log("failed to copy")
             })
     }
     useEffect(() => {

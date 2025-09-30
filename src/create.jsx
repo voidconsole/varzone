@@ -81,7 +81,6 @@ codesRef.current = {
 }
 	let codes = codesRef.current
          
-        console.log("codes set in state", codes)
         const factionsObj = {}
         factions.forEach(value => {
             factionsObj[value] = {
@@ -107,7 +106,6 @@ codesRef.current = {
             judgeCode: codes.judge,
             spectatorCode: codes.spectator,
         })
-        console.log("codes set in db", codes)
         setShowPopup(true)
     }
     return (

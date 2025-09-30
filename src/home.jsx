@@ -25,8 +25,6 @@ function Home() {
             const intervalId = setInterval(() => {
                 if (i+1 < fullTitle.length) {
                     setTitleChars(prev => [...prev, fullTitle[i]])
-		    console.log(fullTitle[i])
-		    console.log(titleChars)
                     i++
                 } else {
                     clearInterval(intervalId)
