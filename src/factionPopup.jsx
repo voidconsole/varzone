@@ -24,7 +24,7 @@ export default function FactionPopup({ factions = [], onSelect }) {
             document.removeEventListener("mousedown", handleClickOutside)
             document.removeEventListener("keydown", handleEscape)
         }
-    }, [   
+    }, [    
 	
     ])
 

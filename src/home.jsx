@@ -1,6 +1,6 @@
 import { useState, useEffect} from "react"
-import styles from "./home.module.css"
 import { Link } from "react-router-dom"
+import styles from "./home.module.css"
 function Home() {
     const [titleChars, setTitleChars] = useState([])
     const [description, setDescription] = useState("")

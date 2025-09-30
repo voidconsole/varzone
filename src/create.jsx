@@ -1,11 +1,11 @@
 import React, { useRef } from "react"
 import { useState } from "react"
-import styles from "./create.module.css"
 import { getDatabase, ref, set } from "firebase/database"
 import { useLocation, useNavigate } from "react-router-dom"
 import Switcher from "./switch"
 import CopyCode from "./copyCodePopup"
 import Tooltip from "./Tooltip"
+import styles from "./create.module.css"
 
 function CreateVar() {
     const db = getDatabase()
@@ -88,12 +88,13 @@ codesRef.current = {
                 score: 0,
             }
         })
+        // Safe to use set here because these are new objects
         set(ref(db, `/${user.uid}/${codes.varId}`), {
             resolution: resolution,
             factions: factionsObj,
             AI: AI,
-	    modulus: parseInt(modulusRef.current.value) || 5,
-	    created: Date.now(),
+            modulus: parseInt(modulusRef.current.value) || 5,
+            created: Date.now(),
             orators: {},
             judges: {},
             spectators: {},

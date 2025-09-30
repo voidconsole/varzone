@@ -1,9 +1,9 @@
 
 import { useState } from 'react';
-import styles from './register.module.css'
 import app from "./firebase"
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
 import { Link, useNavigate } from "react-router-dom";
+import styles from './register.module.css'
 function RegisterCard() {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');

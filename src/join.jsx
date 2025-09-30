@@ -1,11 +1,11 @@
 import { useState } from "react"
-import styles from "./join.module.css"
 import app from "./firebase"
 import { Link } from "react-router-dom"
 import { getAuth, signInAnonymously } from "firebase/auth"
-import { getDatabase, ref, set, get } from "firebase/database"
+import { getDatabase, ref, set, get, update } from "firebase/database"
 import { useNavigate } from "react-router-dom"
 import FactionPopup from "./factionPopup"
+import styles from "./join.module.css"
 
 function JoinVar() {
     const db = getDatabase()
@@ -29,15 +29,11 @@ function JoinVar() {
         // Now complete the database operation with the selected faction
         if (pendingUserData) {
             const { user, data, role } = pendingUserData
-            set(
-                ref(
-                    db,
-                    `${data.adminUID}/${data.varId}/factions/${pickedFaction}/${role}`
-                ),
-                {
-                    [user.uid]: username,
-                }
-            )
+            const updates = {}
+            updates[
+                `${data.adminUID}/${data.varId}/factions/${pickedFaction}/${role}/${user.uid}`
+            ] = username
+            update(ref(db), updates)
                 .then(() => {
                     navigate("/var", {
                         state: {
@@ -96,15 +92,10 @@ function JoinVar() {
                                 })
                             } else if (data.judgeCode === roleCode) {
                                 role = "judges"
-                                set(
-                                    ref(
-                                        db,
-                                        `${data.adminUID}/${data.varId}/${role}`
-                                    ),
-                                    {
-                                        [user.uid]: username,
-                                    }
-                                ).then(() => {
+                                const userRefPath = `${data.adminUID}/${data.varId}/${role}/${user.uid}`
+                                const updates = {}
+                                updates[userRefPath] = username
+                                update(ref(db), updates).then(() => {
                                     navigate("/var", {
                                         state: {
                                             uid: user.uid,
@@ -119,15 +110,10 @@ function JoinVar() {
                                 })
                             } else if (data.spectatorCode === roleCode) {
                                 role = "spectators"
-                                set(
-                                    ref(
-                                        db,
-                                        `${data.adminUID}/${data.varId}/${role}`
-                                    ),
-                                    {
-                                        [user.uid]: username,
-                                    }
-                                ).then(() => {
+                                const userRefPath = `${data.adminUID}/${data.varId}/${role}/${user.uid}`
+                                const updates = {}
+                                updates[userRefPath] = username
+                                update(ref(db), updates).then(() => {
                                     navigate("/var", {
                                         state: {
                                             uid: user.uid,

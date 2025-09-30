@@ -1,9 +1,9 @@
 import { useRef, useEffect, useState } from "react"
-import "./App.css"
-import styles from "./varzone.module.css"
 import { getDatabase, ref, onValue, set } from "firebase/database"
 import Tooltip from "./Tooltip"
 import { getAIVote } from "./voter" // Updated import
+import "./App.css"
+import styles from "./varzone.module.css"
 const Pastels = [
     "#f58d78ff",
     "#ec7e7eff",
@@ -86,6 +86,7 @@ function Faction(props) {
                     const voteValue = parseInt(voteResult.match(/\d+/)[0])
                     if (voteValue === 1) {
                         const newScore = (data.score || 0) + 1
+                        // Safe to use set for leaf value (score)
                         set(ref(db, `${props.path}/score`), newScore)
                     }
                 }
@@ -106,6 +107,7 @@ function Faction(props) {
         e.preventDefault()
         if (props.role == "judges") {
             const newScore = (data.score || 0) + 1
+            // Safe to use set for leaf value (score)
             set(ref(db, `${props.path}/score`), newScore)
             canVote = false
         }
@@ -120,6 +122,7 @@ function Faction(props) {
             const messageKey = `m${
                 data.messages ? Object.keys(data.messages).length + 1 : 1
             }`
+            // Safe to use set for new message node
             set(ref(db, `${props.path}/messages/${messageKey}`), {
                 [data.orators[props.uid]]: message,
             })

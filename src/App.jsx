@@ -1,12 +1,12 @@
 
 import LoginCard from './login'
-import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import Home from './home'
 import RegisterCard from './register'
 import CreateVar from './create'
 import JoinVar from './join'
 import Varzone from './varzone'
+import './App.css'
 function App() {
 	console.log(
         `%c✦  W E L C O M E   T O   H E L L  ✦\n%c  “Abandon all hope, ye who enter here.”`,

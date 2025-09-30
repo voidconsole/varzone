@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react"
-import "./Popup.css"
 import Tooltip from "./Tooltip"
+import "./Popup.css"
 
 export default function CopyCode({ code, onSelect }) {
     const popupRef = useRef()

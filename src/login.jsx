@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
-import styles from './login.module.css'
 import app from "./firebase"
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail} from "firebase/auth"
 import { Link, useNavigate } from "react-router-dom"
+import styles from './login.module.css'
 
 
 
