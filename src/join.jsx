@@ -14,7 +14,9 @@ function JoinVar() {
     const [warning, setWarning] = useState("")
     const [showPopup, setShowPopup] = useState(false)
     const auth = getAuth(app)
-    const [factions, setFactions] = useState([])
+    const [Factions, setFactions] = useState([])
+    const [Resolution, setResolution] = useState("")
+	
     const [pendingUserData, setPendingUserData] = useState(null)
     const navigate = useNavigate()
     function handleCode(e) {
@@ -80,9 +82,9 @@ function JoinVar() {
                                     )
                                 ).then(snapshot => {
                                     if (snapshot.exists()) {
-                                       
+                                       setResolution(JSON.stringify(snapshot.val().resolution)||"")
                                         setFactions(
-                                            Object.keys(snapshot.val()) || []
+                                            Object.keys(snapshot.val().factions) || []
                                         )
                                         setPendingUserData({ user, data, role })
                                         setShowPopup(true)
@@ -152,7 +154,8 @@ function JoinVar() {
         <div>
             {showPopup && (
                 <FactionPopup
-                    factions={factions}
+                    factions={Factions}
+					resolution={Resolution}
                     onSelect={handleFactionSelect}
                 />
             )}
