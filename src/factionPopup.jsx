@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import "./Popup.css"
 
-export default function FactionPopup({ factions = [], onSelect }) {
+export default function FactionPopup({ factions = [], resolution = "", onSelect }) {
     const [selected, setSelected] = useState(null)
     const popupRef = useRef()
 
@@ -34,6 +34,7 @@ export default function FactionPopup({ factions = [], onSelect }) {
                 <h2 className="popup-title">
                     Which faction do you want to join?
                 </h2>
+				<h3>Resolution: {resolution}</h3>
 
                 <div className="faction-options">
                     {factions.map((faction, index) => (
